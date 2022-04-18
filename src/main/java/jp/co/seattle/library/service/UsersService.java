@@ -35,23 +35,21 @@ public class UsersService {
 	}
 
 	/**
-     * ユーザー情報取得
-     * @param email メールアドレス
-     * @param password パスワード
-     * @return ユーザー情報
-     */
-    public UserInfo selectUserInfo(String email, String password) {
-        // TODO SQL生成
-    		String sql = "SELECT email, password FROM users WHERE email = '"
-    				+ email +
-    				"' and password = '"
-    				+ password +
-    				"'";
-    		try {
-    			UserInfo selectedUserInfo = jdbcTemplate.queryForObject(sql, new UserCountRowMapper());
-    			return selectedUserInfo;
-    	     } catch (Exception e) {
-    	    	 return null;
-    	     }
-    	}
+	 * ユーザー情報取得
+	 * 
+	 * @param email    メールアドレス
+	 * @param password パスワード
+	 * @return ユーザー情報
+	 */
+	public UserInfo selectUserInfo(String email, String password) {
+		// TODO SQL生成
+		String sql = "SELECT email, password FROM users WHERE email = '" + email + "' and password = '" + password
+				+ "'";
+		try {
+			UserInfo selectedUserInfo = jdbcTemplate.queryForObject(sql, new UserCountRowMapper());
+			return selectedUserInfo;
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }
