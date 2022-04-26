@@ -84,7 +84,7 @@ public class BooksService {
 	/**
 	 * 最新の書籍情報を取得する
 	 *
-	 * @param MaxId 最新情報
+	 * @return MaxId 最新情報
 	 */
 	public int MaxId() {
 		// SQL生成
