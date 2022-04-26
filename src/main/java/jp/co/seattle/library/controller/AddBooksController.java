@@ -43,6 +43,9 @@ public class AddBooksController {
      * @param author 著者名
      * @param publisher 出版社
      * @param file サムネイルファイル
+     * @param publishDate 出版日
+     * @param isbn ISBN
+     * @param explanatoryText 説明文
      * @param model モデル
      * @return 遷移先画面
      */
@@ -53,6 +56,9 @@ public class AddBooksController {
             @RequestParam("author") String author,
             @RequestParam("publisher") String publisher,
             @RequestParam("thumbnail") MultipartFile file,
+            @RequestParam("publishDate") String publishDate,
+            @RequestParam("isbn") String isbn,
+            @RequestParam("explanatoryText") String explanatoryText,
             Model model) {
         logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 
@@ -61,6 +67,9 @@ public class AddBooksController {
         bookInfo.setTitle(title);
         bookInfo.setAuthor(author);
         bookInfo.setPublisher(publisher);
+        bookInfo.setPublishDate(publishDate);
+        bookInfo.setIsbn(isbn);
+        bookInfo.setExplanatoryText(explanatoryText);
 
         // クライアントのファイルシステムにある元のファイル名を設定する
         String thumbnail = file.getOriginalFilename();
@@ -79,11 +88,36 @@ public class AddBooksController {
 
                 // 異常終了時の処理
                 logger.error("サムネイルアップロードでエラー発生", e);
-                model.addAttribute("bookDetailsInfo", bookInfo);
+                model.addAttribute("bookInfo", bookInfo);
                 return "addBook";
             }
         }
-
+        
+        boolean checkRequired = title.isEmpty() || author.isEmpty() || publisher.isEmpty() || publishDate.isEmpty();
+        boolean checkDate = !publishDate.matches("^[0-9]{8}+$");
+        boolean checkIsbn = !isbn.isEmpty() && !isbn.matches("^[0-9]{10}|[0-9]{13}$");
+        
+        //必須項目確認
+        if (checkRequired) {
+        	model.addAttribute("errorRequired", "必須項目を入力してください");
+        }
+        
+        //出版日の形式チェック
+        if (checkDate) {
+        	model.addAttribute("errorDate", "出版日は半角数字のYYYYMMDD形式で入力してください");
+        }
+        	
+        //ISBNが入力されているかのチェック
+        if (checkIsbn) {
+        	model.addAttribute("errorIsbn", "ISBNの桁数または半角数字が正しくありません");
+    	} 
+        
+        if (checkRequired || checkDate || checkIsbn) {
+        	model.addAttribute("bookInfo", bookInfo);
+        	return "addBook";
+        }
+        
+        		
         // 書籍情報を新規登録する
         booksService.registBook(bookInfo);
 
@@ -91,6 +125,8 @@ public class AddBooksController {
 
         // TODO 登録した書籍の詳細情報を表示するように実装
         //  詳細画面に遷移する
+        int MaxId = booksService.MaxId();
+        model.addAttribute("bookDetailsInfo", booksService.getBookInfo(MaxId));
         return "details";
     }
 
