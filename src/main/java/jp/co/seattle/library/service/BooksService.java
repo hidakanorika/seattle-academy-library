@@ -92,4 +92,23 @@ public class BooksService {
 		int MaxId = jdbcTemplate.queryForObject(sql, int.class);
 		return MaxId;
 	}
+
+/**
+ * 書籍を編集する
+ * 
+ */
+	public void updateBook(BookDetailsInfo bookInfo) {
+	
+		String sql = "UPDATE books SET title = '" + bookInfo.getTitle() + 
+				"', author = '" + bookInfo.getAuthor() +
+				"', publisher = '" + bookInfo.getPublisher() + 
+				"', publish_date = '" + bookInfo.getPublishDate() + 
+				"', thumbnail_name = '" + bookInfo.getThumbnailName() +
+				"', thumbnail_url = '" + bookInfo.getThumbnailUrl() +
+				"', upd_date = now(), isbn = '" + bookInfo.getIsbn() +
+				"', explanatory_text = '" + bookInfo.getExplanatoryText() +
+				"' WHERE id =" + bookInfo.getBookId() + ";";
+	
+		jdbcTemplate.update(sql);
+	}
 }
