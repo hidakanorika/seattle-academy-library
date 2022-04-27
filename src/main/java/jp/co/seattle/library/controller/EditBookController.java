@@ -131,8 +131,7 @@ public class EditBookController {
 
         // TODO 登録した書籍の詳細情報を表示するように実装
         //  詳細画面に遷移する
-        int MaxId = booksService.MaxId();
-        model.addAttribute("bookDetailsInfo", booksService.getBookInfo(MaxId));
+        model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
         return "details";
     }
 
