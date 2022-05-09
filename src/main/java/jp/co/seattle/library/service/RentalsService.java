@@ -33,6 +33,7 @@ public class RentalsService {
 	 * 貸出書籍情報を取得する
 	 *
 	 * @param bookId 書籍ID
+	 * @return 書籍情報
 	 */
 	public int selectRentalBook(int bookId) {
 
