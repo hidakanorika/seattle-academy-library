@@ -28,7 +28,7 @@ public class RentalBookController {
     private RentalsService rentalsService;
 
     @RequestMapping(value = "/rentBook", method = RequestMethod.POST)
-    public String detailsBook(Locale locale,
+    public String rentalsBook(Locale locale,
             @RequestParam("bookId") int bookId,
             Model model) {
         
