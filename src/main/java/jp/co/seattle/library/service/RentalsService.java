@@ -38,7 +38,7 @@ public class RentalsService {
 	public int selectRentalBook(int bookId) {
 
 		// JSPに渡すデータを設定する
-		String sql = "SELECT book_id FROM rentals where book_id =" + bookId;
+		String sql = "SELECT book_id FROM rentals WHERE book_id =" + bookId;
 		try {
 			int selectRentalBook = jdbcTemplate.queryForObject(sql, int.class);
 			return selectRentalBook;
@@ -47,4 +47,15 @@ public class RentalsService {
 		}
 	}
 
+	/**
+	 * 貸出書籍情報を削除する
+	 * 
+	 * @param bookId 書籍ID
+	 * @return 書籍情報
+	 */
+	public void returnBook(int bookId) {
+		// SQL生成
+		String sql = "DELETE FROM rentals WHERE book_id =" + bookId;
+		jdbcTemplate.update(sql);
+	}
 }

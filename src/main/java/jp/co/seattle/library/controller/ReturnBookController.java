@@ -15,10 +15,10 @@ import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.RentalsService;
 
 /**
- * 貸出コントローラー
+ * 返却コントローラー
  */
 @Controller
-public class RentalBookController {
+public class ReturnBookController {
     final static Logger logger = LoggerFactory.getLogger(BooksService.class);
     
     @Autowired
@@ -27,18 +27,18 @@ public class RentalBookController {
     @Autowired
     private RentalsService rentalsService;
 
-    @RequestMapping(value = "/rentBook", method = RequestMethod.POST)
-    public String rentalsBook(Locale locale,
+    @RequestMapping(value = "/returnBook", method = RequestMethod.POST)
+    public String returnBook(Locale locale,
             @RequestParam("bookId") int bookId,
             Model model) {
         
     	if (rentalsService.selectRentalBook(bookId) > 0) {
-    		model.addAttribute("error", "貸出し済みです。");
+    		rentalsService.returnBook(bookId);
     		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
     		return "details";
 			
     	} else {
-    		rentalsService.rentalBook(bookId);
+    		model.addAttribute("error", "貸出しされていません。");
     		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 			return "details";
     	}
