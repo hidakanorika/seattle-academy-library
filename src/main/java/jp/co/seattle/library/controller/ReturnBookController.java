@@ -19,28 +19,24 @@ import jp.co.seattle.library.service.RentalsService;
  */
 @Controller
 public class ReturnBookController {
-    final static Logger logger = LoggerFactory.getLogger(BooksService.class);
-    
-    @Autowired
-    private BooksService booksService;
+	final static Logger logger = LoggerFactory.getLogger(BooksService.class);
 
-    @Autowired
-    private RentalsService rentalsService;
+	@Autowired
+	private BooksService booksService;
 
-    @RequestMapping(value = "/returnBook", method = RequestMethod.POST)
-    public String returnBook(Locale locale,
-            @RequestParam("bookId") int bookId,
-            Model model) {
-        
-    	if (rentalsService.selectRentalBook(bookId) > 0) {
-    		rentalsService.returnBook(bookId);
-    		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-    		return "details";
-			
-    	} else {
-    		model.addAttribute("error", "貸出しされていません。");
-    		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-			return "details";
-    	}
-    }
+	@Autowired
+	private RentalsService rentalsService;
+
+	@RequestMapping(value = "/returnBook", method = RequestMethod.POST)
+	public String returnBook(Locale locale, @RequestParam("bookId") int bookId, Model model) {
+
+		if (rentalsService.selectRentalBook(bookId) == 0) {
+			model.addAttribute("error", "貸出しされていません。");
+
+		} else {
+			rentalsService.returnBook(bookId);
+		}
+		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+		return "details";
+	}
 }
