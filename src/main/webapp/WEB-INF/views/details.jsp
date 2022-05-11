@@ -43,7 +43,7 @@
                     </a>
                 </div>
                 <div>
-                    <span>${bookDetailsInfo.message}</span>
+                    <span>${bookDetailsInfo.rentMessage}</span>
                 </div>
                 <c:if test="${!empty error}">
                     <div class="error">
