@@ -40,10 +40,9 @@ public class SearchController {
 
 		if (booksService.searchBook(keyword).isEmpty()) {
 			model.addAttribute("searchMessage", "検索結果がありません。");
-			return "home";
 		} else {
 		model.addAttribute("bookList", booksService.searchBook(keyword));
-		return "home";
 		}
+		return "home";
 	}
 }

@@ -34,7 +34,7 @@
             </form>
         </div>
         <div class="content_body">
-        <c:if test="${!empty searchMessage}">
+            <c:if test="${!empty searchMessage}">  
                 <div class="error">${searchMessage}</div>
             </c:if>
             <c:if test="${!empty resultMessage}">
