@@ -118,4 +118,17 @@ public class BooksService {
 	
 		jdbcTemplate.update(sql);
 	}
+	
+	/**
+	 * 書籍を検索する
+	 * 
+	 */
+	public List<BookInfo> searchBook(String keyword) {
+		
+		List<BookInfo> searchBook = jdbcTemplate.query(
+				"SELECT id, title, thumbnail_url, author, publisher, publish_date FROM books WHERE title like '%" + keyword + "%'",
+				new BookInfoRowMapper());
+		
+		return searchBook;
+	}
 }

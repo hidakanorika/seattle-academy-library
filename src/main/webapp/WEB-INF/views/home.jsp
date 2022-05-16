@@ -28,7 +28,15 @@
         <h1>Home</h1>
         <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a>
         <a href="<%=request.getContextPath()%>/bulkBook" class="btn_bulk_book">一括登録</a>
+        <div style="text-align:right;float:right;">
+            <form action="searchBook" method="post">
+                <input type="search" class="search1" name="keyword" placeholder="キーワードを入力してください"> <button class="btn_searchBook">検索</button> 
+            </form>
+        </div>
         <div class="content_body">
+        <c:if test="${!empty searchMessage}">
+                <div class="error">${searchMessage}</div>
+            </c:if>
             <c:if test="${!empty resultMessage}">
                 <div class="error_msg">${resultMessage}</div>
             </c:if>
