@@ -48,7 +48,14 @@ public class BooksService {
 	public BookDetailsInfo getBookInfo(int bookId) {
 
 		// JSPに渡すデータを設定する
-		String sql = "SELECT * FROM books where id =" + bookId;
+		String sql = "SELECT books.id, books.title, books.author, books.publisher, books.publish_date, books.thumbnail_url, books.thumbnail_name, books.reg_date, books.upd_date, books.isbn, books.explanatory_text, rentals.id , rentals.book_id, "
+				+ "CASE WHEN book_id > 0 then '貸し出し中' "
+				+ "ELSE '貸し出し可' "
+				+ "END AS rentMessage "
+				+ "FROM books "
+				+ "LEFT OUTER JOIN rentals "
+				+ "ON rentals.book_id = books.id "
+				+ "WHERE books.id =" + bookId;
 
 		BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
 
@@ -93,10 +100,10 @@ public class BooksService {
 		return MaxId;
 	}
 
-/**
- * 書籍を編集する
- * 
- */
+	/**
+	 * 書籍を編集する
+	 * 
+	 */
 	public void updateBook(BookDetailsInfo bookInfo) {
 	
 		String sql = "UPDATE books SET title = '" + bookInfo.getTitle() + 
