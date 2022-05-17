@@ -120,7 +120,7 @@ public class BooksService {
 	}
 	
 	/**
-	 * 書籍を検索する
+	 * 書籍を部分一致検索する
 	 * 
 	 */
 	public List<BookInfo> searchBook(String keyword) {
@@ -130,5 +130,18 @@ public class BooksService {
 				new BookInfoRowMapper());
 		
 		return searchBook;
+	}
+	
+	/**
+	 * 書籍を完全一致検索する
+	 * 
+	 */
+	public List<BookInfo> exactMatchBoook(String keyword) {
+		
+		List<BookInfo> exactMatchBook = jdbcTemplate.query(
+				"SELECT id, title, thumbnail_url, author, publisher, publish_date FROM books WHERE title like '" + keyword + "'",
+				new BookInfoRowMapper());
+		
+		return exactMatchBook;
 	}
 }
