@@ -30,19 +30,30 @@ public class SearchController {
 	 * @param locale ロケール情報
 	 * @param bookId 書籍ID
 	 * @param model  モデル情報
+	 * @param keyword  検索キーワード
 	 * @return 遷移先画面名
 	 */
 
 	@Transactional
 	@RequestMapping(value = "/searchBook", method = RequestMethod.POST)
-	public String searchBook(Locale locale, @RequestParam("keyword") String keyword, Model model) {
+	public String searchBook(Locale locale, @RequestParam("keyword") String keyword, @RequestParam("radiobutton") int radiobutton, Model model) {
 		logger.info("Welcome delete! The client locale is {}.", locale);
 
+	if (radiobutton == 0)
+		
 		if (booksService.searchBook(keyword).isEmpty()) {
-			model.addAttribute("searchMessage", "検索結果がありません。");
+			model.addAttribute("resultMessage", "検索結果がありません。");
 		} else {
-		model.addAttribute("bookList", booksService.searchBook(keyword));
+			model.addAttribute("bookList", booksService.searchBook(keyword));
+			
+	} else {
+		
+		if (booksService.exactMatchBoook(keyword).isEmpty()) {
+			model.addAttribute("resultMessage", "検索結果がありません。");
+		} else {
+			model.addAttribute("bookList", booksService.exactMatchBoook(keyword));
 		}
-		return "home";
+	}
+	return "home";
 	}
 }

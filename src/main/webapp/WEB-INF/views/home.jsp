@@ -26,19 +26,22 @@
     </header>
     <main>
         <h1>Home</h1>
-        <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a>
-        <a href="<%=request.getContextPath()%>/bulkBook" class="btn_bulk_book">一括登録</a>
-        <div style="text-align:right;float:right;">
-            <form action="searchBook" method="post">
-                <input type="search" class="search1" name="keyword" placeholder="キーワードを入力してください"> <button class="btn_searchBook">検索</button> 
-            </form>
+        <div class="top">
+            <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a>
+            <a href="<%=request.getContextPath()%>/bulkBook" class="btn_bulk_book">一括登録</a>
+            <div style="float:right;">
+                <form action="searchBook" method="post">
+                    <input type="search" class="search1" name="keyword" placeholder="キーワードを入力してください"> 
+                    <button type="submit" class="btn_searchBook">検索</button> 
+                    <br>
+                    <input type="radio" name="radiobutton" value="0" checked> 部分一致検索
+                    <input type="radio" name="radiobutton" value="1"> 完全一致検索
+                </form>
+            </div>
         </div>
         <div class="content_body">
-            <c:if test="${!empty searchMessage}">  
-                <div class="error">${searchMessage}</div>
-            </c:if>
             <c:if test="${!empty resultMessage}">
-                <div class="error_msg">${resultMessage}</div>
+                <div class="error">${resultMessage}</div>
             </c:if>
             <div>
                 <div class="booklist">
