@@ -31,6 +31,7 @@ public class SearchController {
 	 * @param bookId 書籍ID
 	 * @param model  モデル情報
 	 * @param keyword  検索キーワード
+	 * @param radiobutton  ラジオボタン
 	 * @return 遷移先画面名
 	 */
 

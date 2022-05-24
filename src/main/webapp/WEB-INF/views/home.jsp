@@ -27,17 +27,20 @@
     <main>
         <h1>Home</h1>
         <div class="top">
-            <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a>
-            <a href="<%=request.getContextPath()%>/bulkBook" class="btn_bulk_book">一括登録</a>
-            <div style="float:right;">
-                <form action="searchBook" method="post">
-                    <input type="search" class="search1" name="keyword" placeholder="キーワードを入力してください"> 
-                    <button type="submit" class="btn_searchBook">検索</button> 
-                    <br>
-                    <input type="radio" name="radiobutton" value="0" checked> 部分一致検索
-                    <input type="radio" name="radiobutton" value="1"> 完全一致検索
+                <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a>
+                <a href="<%=request.getContextPath()%>/bulkBook" class="btn_bulk_book">一括登録</a>
+                <form method="post" action="<%=request.getContextPath()%>/historyBook" style="display: inline">
+                    <button type="submit" class="btn_historyBook">書籍貸出履歴</button>
                 </form>
-            </div>
+                <div style="float:right;">
+                    <form action="searchBook" method="post">
+                        <input type="search" class="search1" name="keyword" placeholder="キーワードを入力してください"> 
+                        <button type="submit" class="btn_searchBook">検索</button> 
+                        <br>
+                        <input type="radio" name="radiobutton" value="0" checked> 部分一致検索
+                        <input type="radio" name="radiobutton" value="1"> 完全一致検索
+                    </form>
+                </div>
         </div>
         <div class="content_body">
             <c:if test="${!empty resultMessage}">
@@ -47,7 +50,7 @@
                 <div class="booklist">
                     <c:forEach var="bookInfo" items="${bookList}">
                         <div class="books">
-                            <form method="post" class="book_thumnail" action="<%=request.getContextPath()%>/details">
+                            <form method="get" class="book_thumnail" action="<%=request.getContextPath()%>/details">
                                 <a href="javascript:void(0)" onclick="this.parentNode.submit();"> <c:if test="${bookInfo.thumbnail == 'null'}">
                                         <img class="book_noimg" src="resources/img/noImg.png">
                                     </c:if> <c:if test="${bookInfo.thumbnail != 'null'}">

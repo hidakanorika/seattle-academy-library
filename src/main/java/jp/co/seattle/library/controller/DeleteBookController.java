@@ -24,7 +24,7 @@ public class DeleteBookController {
 
 	@Autowired
 	private BooksService booksService;
-
+	
 	@Autowired
 	private RentalsService rentalsService;
 
@@ -39,18 +39,19 @@ public class DeleteBookController {
 
 	@Transactional
 	@RequestMapping(value = "/deleteBook", method = RequestMethod.POST)
-	public String deleteBook(Locale locale, @RequestParam("bookId") Integer bookId, Model model) {
+	public String deleteBook(Locale locale, @RequestParam("bookId") int bookId, Model model) {
 		logger.info("Welcome delete! The client locale is {}.", locale);
 
-		if (rentalsService.selectRentalBook(bookId) == 0) {
+		if (rentalsService.selectRentalBookDate(bookId) == null) {
 			booksService.deleteBook(bookId);
-			model.addAttribute("bookList", booksService.getBookList());
-			return "home";
-
+			
 		} else {
-			model.addAttribute("error", "貸し出し中");
+			model.addAttribute("error", "貸出中の書籍は削除できません。");
 			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 			return "details";
 		}
+		
+		model.addAttribute("bookList", booksService.getBookList());
+		return "home";
 	}
 }

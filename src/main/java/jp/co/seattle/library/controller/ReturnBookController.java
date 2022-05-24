@@ -32,9 +32,12 @@ public class ReturnBookController {
 
 		if (rentalsService.selectRentalBook(bookId) == 0) {
 			model.addAttribute("error", "貸出しされていません。");
-
+			
+		} else if (rentalsService.selectRentalBookDate(bookId) == null) {
+			model.addAttribute("error", "貸出されていません。");
+			
 		} else {
-			rentalsService.returnBook(bookId);
+			rentalsService.updReturnBook(bookId);
 		}
 		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 		return "details";

@@ -31,7 +31,7 @@ public class BookDetailsInfo {
     private String explanatoryText;
     
     private String rentMessage;
-
+    
     public BookDetailsInfo() {
 
     }
