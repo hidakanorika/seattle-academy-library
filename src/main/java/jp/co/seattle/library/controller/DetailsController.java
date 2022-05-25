@@ -32,7 +32,7 @@ public class DetailsController {
      * @return
      */
     @Transactional
-    @RequestMapping(value = "/details", method = RequestMethod.POST)
+    @RequestMapping(value = "/details", method = RequestMethod.GET)
     public String detailsBook(Locale locale,
             @RequestParam("bookId") Integer bookId,
             Model model) {
